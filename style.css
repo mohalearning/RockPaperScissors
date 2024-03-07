@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: lightblue;
+    text-align: center;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.play-btn{
+    margin: 100px;
+    width: 400px;
+    height: 100px;
+    text-align: center;
+}
+
+/* 
+.scoreboard {
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: space-between; */
+/* } */
+
+/* h1{
+    text-align: center;
+} */
+
+/* .score-panel {
+    width: 400px;
+    height: 500px;
+    border: 2px solid red;
+} */

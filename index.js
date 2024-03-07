@@ -1,7 +1,7 @@
+let gameplayed = false;
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
-
 
 function getComputerChoice() {
     let computerChoice = getRandomInt(3);
@@ -63,4 +63,43 @@ function playGame() {
     else
         console.log("You Lose This Game");
 }
+
+function createScorePanel(playerType) {
+    const scorePanel = document.createElement("div");
+    const score = document.createElement("h1");
+    score.textContent = "SCORE";
+    const playerChoice = document.createElement("div");
+    const rockButton = document.createElement("BUTTON");
+    rockButton.id = "rock-" + playerType;
+    rockButton.textContent = "ROCK";
+    const paperButton = document.createElement("BUTTON");
+    paperButton.id = "paper-" + playerType;
+    paperButton.textContent = "PAPER";
+    const scissorButton = document.createElement("BUTTON");
+    scissorButton.id = "scissor-" + playerType;
+    scissorButton.textContent = "SCISSOR";
+    scorePanel.appendChild(score);
+    scorePanel.appendChild(playerChoice);
+    scorePanel.appendChild(rockButton);
+    scorePanel.appendChild(paperButton);
+    scorePanel.appendChild(scissorButton);
+    return scorePanel;
+}
+
+const playButton = document.getElementById('play-btn');
+
+playButton.addEventListener("click", () => {
+    gameplayed = true;
+    const body = document.querySelector('body');
+    const scoreBoard = document.createElement("div");
+    const playerPanel = createScorePanel("player");
+    const computerPanel = createScorePanel("computer");
+    scoreBoard.className = "scoreboard";
+
+    body.removeChild(playButton);
+    scoreBoard.appendChild(playerPanel);
+    scoreBoard.appendChild(computerPanel);
+    scoreBoard.style = "display: flex;justify-content:space-around;";
+    body.appendChild(scoreBoard);
+});
 
