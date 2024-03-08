@@ -68,20 +68,32 @@ function playGame(userInput) {
     }
 }
 
+function createButton(_id, content, image) {
+    const button = document.createElement("BUTTON");
+    button.id = _id;
+    button.textContent = content;
+    button.style.width = "250px";
+    button.style.height = "250px";
+    button.appendChild(image);
+    return button;
+}
+
+function createImage(path) {
+    const image = document.createElement("img");
+    image.src = path;
+    image.style.width = "200px";
+    image.style.height = "200px";
+    return image;
+}
+
 function createScorePanel(playerType) {
     const scorePanel = document.createElement("div");
     const score = document.createElement("h1");
     score.textContent = "SCORE";
     const playerChoice = document.createElement("div");
-    const rockButton = document.createElement("BUTTON");
-    rockButton.id = "rock-" + playerType;
-    rockButton.textContent = "ROCK";
-    const paperButton = document.createElement("BUTTON");
-    paperButton.id = "paper-" + playerType;
-    paperButton.textContent = "PAPER";
-    const scissorButton = document.createElement("BUTTON");
-    scissorButton.id = "scissor-" + playerType;
-    scissorButton.textContent = "SCISSOR";
+    rockButton = createButton("rock-id", "ROCK", createImage("images/rock.png"));
+    paperButton = createButton("paper-id", "PAPER", createImage("images/paper.png"));
+    scissorButton = createButton("scissor-id", "SCISSOR", createImage("images/scissor.png"));
     scorePanel.appendChild(score);
     scorePanel.appendChild(playerChoice);
     rockButton.addEventListener("click", () => {
@@ -102,7 +114,6 @@ function createScorePanel(playerType) {
 function playerChoose(playerChoice) {
     playGame(playerChoice);
 }
-
 
 const playButton = document.getElementById('play-btn');
 
