@@ -47,24 +47,41 @@ function playRound(player_selection, computer_selection) {
 }
 
 function playGame(userInput) {
+    let result;
     userChoice = getUserChoice(userInput);
     computerChoice = getComputerChoice();
+    const panelUserChoice = document.getElementById("player-choice-player-id");
+    const panelComputerChoice = document.getElementById("player-choice-computer-id");
+
+    panelUserChoice.innerHTML = "";
+    panelComputerChoice.innerHTML = "";
+    panelUserChoice.appendChild(createImage(userChoice));
+    panelComputerChoice.appendChild(createImage(computerChoice));
     roundResult = playRound(userChoice, computerChoice);
-    if (roundResult == 1)
+    if (roundResult == 1) {
         player++;
-    if (roundResult == 2)
+        const score = document.getElementById("score-id-player");
+        score.textContent = player;
+    }
+    if (roundResult == 2) {
         computer++;
+        const score = document.getElementById("score-id-computer");
+        score.textContent = computer;
+    }
     games++;
     if (games == 5) {
         if (player === computer)
-            console.log("You Draw This Game");
+            result = "You Draw This Game";
         if (player > computer)
-            console.log("You Won This Game");
+            result = "You Won This Game";
         else
-            console.log("You Lose This Game");
+            result = "You Lose This Game";
+        alert(result);
         games = 0;
         player = 0;
         computer = 0;
+        document.getElementById("score-id-player").textContent = 0;
+        document.getElementById("score-id-computer").textContent = 0;
     }
 }
 
@@ -78,24 +95,26 @@ function createButton(_id, content, image) {
     return button;
 }
 
-function createImage(path) {
+function createImage(type) {
+    let path;
     const image = document.createElement("img");
+    if (type == "rock")
+        path = "images/rock.png";
+    if (type == "paper")
+        path = "images/paper.png";
+    if (type == "scissor")
+        path = "images/scissor.png";
     image.src = path;
     image.style.width = "200px";
     image.style.height = "200px";
     return image;
 }
 
-function createScorePanel(playerType) {
-    const scorePanel = document.createElement("div");
-    const score = document.createElement("h1");
-    score.textContent = "SCORE";
-    const playerChoice = document.createElement("div");
-    rockButton = createButton("rock-id", "ROCK", createImage("images/rock.png"));
-    paperButton = createButton("paper-id", "PAPER", createImage("images/paper.png"));
-    scissorButton = createButton("scissor-id", "SCISSOR", createImage("images/scissor.png"));
-    scorePanel.appendChild(score);
-    scorePanel.appendChild(playerChoice);
+
+function createButtons(scorePanel) {
+    rockButton = createButton("rock-id", "ROCK", createImage("rock"));
+    paperButton = createButton("paper-id", "PAPER", createImage("paper"));
+    scissorButton = createButton("scissor-id", "SCISSOR", createImage("scissor"));
     rockButton.addEventListener("click", () => {
         playerChoose("ROCK");
     });
@@ -108,6 +127,25 @@ function createScorePanel(playerType) {
     scorePanel.appendChild(rockButton);
     scorePanel.appendChild(paperButton);
     scorePanel.appendChild(scissorButton);
+}
+
+function createScorePanel(playerType) {
+    const scorePanel = document.createElement("div");
+    const score = document.createElement("h1");
+    score.textContent = "SCORE";
+    const scoreValue = document.createElement("p");
+    scoreValue.id = "score-id-" + playerType;
+    scoreValue.textContent = 0;
+    const playerChoice = document.createElement("div");
+    playerChoice.id = "player-choice-" + playerType + "-id";
+    const image = document.createElement("img");
+    image.src = "images/RPS_GAME.png";
+
+    playerChoice.appendChild(image);
+    scorePanel.appendChild(score);
+    scorePanel.appendChild(scoreValue);
+    scorePanel.appendChild(playerChoice);
+    createButtons(scorePanel);
     return scorePanel;
 }
 
