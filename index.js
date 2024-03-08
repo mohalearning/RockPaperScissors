@@ -1,4 +1,7 @@
-let gameplayed = false;
+let games = 0;
+let computer = 0;
+let player = 0;
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -43,25 +46,26 @@ function playRound(player_selection, computer_selection) {
     return win;
 }
 
-function playGame() {
-    let userWin = 0;
-    let computerWin = 0;
-    for (let i = 0; i < 5; i++) {
-        userInput = prompt("Enter Your Choice");
-        userChoice = getUserChoice(userInput);
-        computerChoice = getComputerChoice();
-        roundResult = playRound(userChoice, computerChoice);
-        if (roundResult == 1)
-            userWin++;
-        if (roundResult == 2)
-            computerWin++;
+function playGame(userInput) {
+    userChoice = getUserChoice(userInput);
+    computerChoice = getComputerChoice();
+    roundResult = playRound(userChoice, computerChoice);
+    if (roundResult == 1)
+        player++;
+    if (roundResult == 2)
+        computer++;
+    games++;
+    if (games == 5) {
+        if (player === computer)
+            console.log("You Draw This Game");
+        if (player > computer)
+            console.log("You Won This Game");
+        else
+            console.log("You Lose This Game");
+        games = 0;
+        player = 0;
+        computer = 0;
     }
-    if (userWin === computerWin)
-        console.log("You Draw This Game");
-    if (userWin > computerWin)
-        console.log("You Won This Game");
-    else
-        console.log("You Lose This Game");
 }
 
 function createScorePanel(playerType) {
@@ -80,16 +84,29 @@ function createScorePanel(playerType) {
     scissorButton.textContent = "SCISSOR";
     scorePanel.appendChild(score);
     scorePanel.appendChild(playerChoice);
+    rockButton.addEventListener("click", () => {
+        playerChoose("ROCK");
+    });
+    paperButton.addEventListener("click", () => {
+        playerChoose("PAPER");
+    });
+    scissorButton.addEventListener("click", () => {
+        playerChoose("SCISSOR");
+    });
     scorePanel.appendChild(rockButton);
     scorePanel.appendChild(paperButton);
     scorePanel.appendChild(scissorButton);
     return scorePanel;
 }
 
+function playerChoose(playerChoice) {
+    playGame(playerChoice);
+}
+
+
 const playButton = document.getElementById('play-btn');
 
 playButton.addEventListener("click", () => {
-    gameplayed = true;
     const body = document.querySelector('body');
     const scoreBoard = document.createElement("div");
     const playerPanel = createScorePanel("player");
@@ -102,4 +119,3 @@ playButton.addEventListener("click", () => {
     scoreBoard.style = "display: flex;justify-content:space-around;";
     body.appendChild(scoreBoard);
 });
-
